@@ -189,13 +189,19 @@ class View {
 
 	public function render()
 	{
-		// Collect current page
-		$ob = ob_get_clean();
-
 		// Restart the buffer
 		ob_start();
 
 		extract($this->data);
+
+		$globals = Config::get('globals');
+
+		foreach($globals as $key => $value)
+		{
+			$$key = $value;
+		}
+
+		unset($globals);
 
 		@include(Config::get('paths.components') . '/' . $this->namespace . '/' . $this->tag . '.html');
 
@@ -204,9 +210,6 @@ class View {
 
 		// Restart the buffer
 		ob_start();
-
-		// Write page back to output buffer
-		echo $ob;
 
 		return $fetched;
 	}
