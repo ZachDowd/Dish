@@ -1,0 +1,21 @@
+{
+    "name": "ZachDowd/Dish",
+    "description": "Dish templates",
+    "keywords": [
+        "dish"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Zach Dowd",
+            "email": "hello@zachdowd.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Dish\\": "src"
+        }
+    }
+}
