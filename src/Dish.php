@@ -68,7 +68,16 @@ class Dish {
 			$file = '/index';
 		}
 
-		return Config::get('paths.pages') . $file . '.html';
+		$index = Config::get('paths.pages') . $file . '/index.html';
+
+		if(file_exists($index))
+		{
+			return $index;
+		}
+		else
+		{
+			return Config::get('paths.pages') . $file . '.html';
+		}
 	}
 
 	/**
