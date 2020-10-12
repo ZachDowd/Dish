@@ -14,7 +14,7 @@ class Dish {
 	{
 		$types = Config::get('assets');
 
-		if(preg_match('/\.(?:' . implode('|', $types) . ')$/', $_SERVER["REQUEST_URI"]))
+		if(preg_match('/\.(?:' . implode('|', $types) . ')(\?.*)?$/', $_SERVER["REQUEST_URI"]))
 		{
 			return true;
 		}
