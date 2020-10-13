@@ -113,6 +113,19 @@ class Build {
 		// Set the path name
 		$path = self::pathify($src->path(), $dest->path(), $file->path());
 
+		if(Config::get('indexify') && !preg_match('/index\.html$/', $path))
+		{
+			$path = str_replace('.html', '', $path);
+			$builtFolder = new Folder($path);
+
+			if(!$builtFolder->exists())
+			{
+				$builtFolder->make();
+			}
+
+			$path .= '/index.html';
+		}
+
 		// Save the file
 		$built = new File($path);
 		$built->make();
