@@ -48,7 +48,7 @@ class Assets {
 
 		if(Config::get('minify'))
 		{
-			$html[] = '<script src="' . $host . '/' . Config::get('timestamp') . '.js"></script>';
+			$html[] = '<script src="' . $assetsPath . '/' . Config::get('timestamp') . '.js"></script>';
 		}
 		else
 		{
