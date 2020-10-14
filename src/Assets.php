@@ -18,7 +18,7 @@ class Assets {
 
 		if(Config::get('minify'))
 		{
-			$html[] = '<link rel="stylesheet" type="text/css" href="' . $assetsPath . '/' Config::get('timestamp') . '.css" />';
+			$html[] = '<link rel="stylesheet" type="text/css" href="' . $assetsPath . '/' . Config::get('timestamp') . '.css" />';
 		}
 		else
 		{
