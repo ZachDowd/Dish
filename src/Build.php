@@ -113,7 +113,7 @@ class Build {
 		// Set the path name
 		$path = self::pathify($src->path(), $dest->path(), $file->path());
 
-		if(Config::get('indexify') && !preg_match('/index\.html$/', $path) && !preg_match('/[0-9]\.html$/', $path))
+		if(Config::get('indexify') && preg_match('/\.html$/', $path) && !preg_match('/(index|[0-9]{3})\.html$/', $path))
 		{
 			$path = str_replace('.html', '', $path);
 			$builtFolder = new Folder($path);
