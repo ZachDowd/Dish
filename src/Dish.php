@@ -68,7 +68,7 @@ class Dish {
 			$file = '/index';
 		}
 
-		$index = Config::get('paths.pages') . $file . '/index.html';
+		$index = Config::get('paths.public') . $file . '/index.html';
 
 		if(file_exists($index))
 		{
@@ -76,7 +76,7 @@ class Dish {
 		}
 		else
 		{
-			return Config::get('paths.pages') . $file . '.html';
+			return Config::get('paths.public') . $file . '.html';
 		}
 	}
 
@@ -120,7 +120,7 @@ class Dish {
 	public static function serve404()
 	{
 		header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
-		self::serve(Config::get('paths.pages') . '/404.html');
+		self::serve(Config::get('paths.public') . '/404.html');
 	}
 
 	/**

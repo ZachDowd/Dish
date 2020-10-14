@@ -35,16 +35,15 @@ class Build {
 	 *
 	 * @param	$src	string
 	 * @param	$dest	string
-	 * @param	$parse	bool
 	 * @return	void
 	 */
 
-	public static function move($src, $dest, $parse = false)
+	public static function move($src, $dest)
 	{
 		$src = new Folder($src);
 		$dest = new Folder($dest);
 
-		self::processFolder($src, $dest, $src, $parse);
+		self::processFolder($src, $dest, $src);
 	}
 
 	/**
@@ -55,11 +54,10 @@ class Build {
 	 * @param	$from Drive/Folder
 	 * @param	$dest Drive/Folder
 	 * @param	$src Drive/Folder
-	 * @param	$parse	bool
 	 * @return	void
 	 */
 
-	public static function processFolder($from, $dest, $src, $parse)
+	public static function processFolder($from, $dest, $src)
 	{
 		// Get child files and folders
 		$files = $from->files();
@@ -72,12 +70,12 @@ class Build {
 		foreach($folders as $folder)
 		{
 			$f = new Folder($folder->path());
-			self::processFolder($f, $dest, $src, $parse);
+			self::processFolder($f, $dest, $src);
 		}
 
 		foreach($files as $file)
 		{
-			self::processFile($file, $dest, $src, $parse);
+			self::processFile($file, $dest, $src);
 		}
 	}
 
@@ -89,25 +87,19 @@ class Build {
 	 * @param	$file	Drive/File
 	 * @param	$dest	Drive/Folder
 	 * @param	$src	Drive/Folder
-	 * @param	$parse	bool
 	 * @return	void
 	 */
 
-	public static function processFile($file, $dest, $src, $parse)
+	public static function processFile($file, $dest, $src)
 	{
 		$contents = $file->contents();
 
-		if($parse)
+		if(preg_match('/\.html$/', $file->path()))
 		{
 			// Parse the file
 			$doc = new View;
 			$contents = $doc->parse($contents);
 			$contents = $doc->parseReplacements($contents, Config::get('replacements'));
-
-			if(Config::get('host-assets'))
-			{
-				$contents = self::htmlFixImages($contents);
-			}
 		}
 
 		// Set the path name
@@ -149,21 +141,6 @@ class Build {
 	}
 
 	/**
-	 * htmlFixImages
-	 *
-	 * Replace images with correct URLs
-	 *
-	 * @param	$html	string
-	 * @return	string
-	 */
-
-	public static function htmlFixImages($html)
-	{
-		// Replace images with hosted versions
-		return preg_replace('/(\()?(\'|\")?\/images\//', "$1$2" . Config::get('host') . "/images/", $html);
-	}
-
-	/**
 	 * minify
 	 *
 	 * Minify CSS and JS
@@ -173,12 +150,10 @@ class Build {
 
 	public static function minify()
 	{
-		$dest = Config::get('paths.dest');
 		$public = Config::get('paths.public');
 
-		$css = new Folder($dest . '/css');
-		$css->delete();
-		$css->make();
+		$assetsPath = Config::get('paths.dest') . str_replace(Config::get('paths.public'), '', Config::get('paths.assets'));
+		$assetsPath = str_replace('//', '/', $assetsPath);
 
 		$minifier = new Minify\CSS();
 		$files = Config::get('css');
@@ -188,11 +163,7 @@ class Build {
 			$minifier->add($public . $file);
 		}
 
-		$minifier->minify($dest . '/css/' . Config::get('timestamp') . '.css');
-
-		$js = new Folder($dest . '/js');
-		$js->delete();
-		$js->make();
+		$minifier->minify($assetsPath . '/' . Config::get('timestamp') . '.css');
 
 		$minifier = new Minify\JS();
 		$files = Config::get('js');
@@ -202,7 +173,8 @@ class Build {
 			$minifier->add($public . $file);
 		}
 
-		$minifier->minify($dest . '/js/'  . Config::get('timestamp') . '.js');
+		$minifier->minify($assetsPath . '/' . Config::get('timestamp') . '.js');
+
 	}
 
 }

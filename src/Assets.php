@@ -14,18 +14,18 @@ class Assets {
 	{
 		$html = [];
 
-		$host = Config::get('host-assets') ? Config::get('host') : '';
+		$assetsPath = str_replace(Config::get('paths.public'), '', Config::get('paths.assets'));
 
 		if(Config::get('minify'))
 		{
-			$html[] = '<link rel="stylesheet" type="text/css" href="' . $host . '/css/' . Config::get('timestamp') . '.css" />';
+			$html[] = '<link rel="stylesheet" type="text/css" href="' . $assetsPath . '/' Config::get('timestamp') . '.css" />';
 		}
 		else
 		{
 			$files = Config::get('css');
 			foreach($files as $file)
 			{
-				$html[] = '<link rel="stylesheet" type="text/css" href="' . $host . $file . '" />';
+				$html[] = '<link rel="stylesheet" type="text/css" href="' . $file . '" />';
 			}
 		}
 
@@ -44,11 +44,11 @@ class Assets {
 	{
 		$html = [];
 
-		$host = Config::get('host-assets') ? Config::get('host') : '';
+		$assetsPath = str_replace(Config::get('paths.public'), '', Config::get('paths.assets'));
 
 		if(Config::get('minify'))
 		{
-			$html[] = '<script src="' . $host . '/js/' . Config::get('timestamp') . '.js"></script>';
+			$html[] = '<script src="' . $host . '/' . Config::get('timestamp') . '.js"></script>';
 		}
 		else
 		{
@@ -56,7 +56,7 @@ class Assets {
 
 			foreach($files as $file)
 			{
-				$html[] = '<script src="' . $host . $file . '"></script>';
+				$html[] = '<script src="' . $file . '"></script>';
 			}
 		}
 

@@ -10,7 +10,6 @@ use \Dish\CLI;
 $params = CLI::parameters($_SERVER['argv'], [
 	'addr'			=> '127.0.0.1:8080',
 	'dest'			=> 'build',
-	'host-assets'	=> false,
 	'indexify'		=> false,
 	'minify'		=> false,
 	'timestamp'		=> date('Y-m-d_His'),
@@ -24,8 +23,8 @@ $params['paths'] = [
 	'src'			=> $DIR . '/src',
 	'components'	=> $DIR . '/src/components',
 	'config'		=> $DIR . '/src/config',
-	'pages'			=> $DIR . '/src/pages',
-	'public'		=> $DIR . '/src/public'
+	'public'		=> $DIR . '/src/public',
+	'assets'		=> $DIR . '/src/public/site'
 ];
 
 // `dish build` -> run build
