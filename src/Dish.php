@@ -60,7 +60,7 @@ class Dish {
 
 	public static function pagePath()
 	{
-		$file = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
+		$file = preg_replace('/\/?(\?.*)?$/', '', $_SERVER['REQUEST_URI']);
 
 		// Correct the filename for the homepage
 		if($file == '/')
@@ -94,6 +94,13 @@ class Dish {
 		if(Config::get('parse'))
 		{
 			ob_start();
+
+			$globals = Config::get('globals');
+
+			foreach($globals as $key => $value)
+			{
+				$$key = $value;
+			}
 
 			include($page ? $page : self::pagePath());
 
