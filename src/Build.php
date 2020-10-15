@@ -92,14 +92,29 @@ class Build {
 
 	public static function processFile($file, $dest, $src)
 	{
-		$contents = $file->contents();
-
 		if(preg_match('/\.html$/', $file->path()))
 		{
+			ob_start();
+
+			$globals = Config::get('globals');
+	
+			foreach($globals as $key => $value)
+			{
+				$$key = $value;
+			}
+	
+			include($file->path());
+	
+			$contents = ob_get_clean();
+
 			// Parse the file
 			$doc = new View;
 			$contents = $doc->parse($contents);
 			$contents = $doc->parseReplacements($contents, Config::get('replacements'));
+		}
+		else
+		{
+			$contents = $file->contents();
 		}
 
 		// Set the path name
