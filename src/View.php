@@ -184,6 +184,13 @@ class View {
 		// Restart the buffer
 		ob_start();
 
+		$this->data['props'] = '';
+
+		foreach($this->data as $key => $value)
+		{
+			$this->data['props'] .= ' ' . $key . '="' . $value . '"';
+		}
+
 		extract($this->data);
 
 		$globals = Config::get('globals');
