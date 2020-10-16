@@ -6,7 +6,7 @@ use \Dish\Config;
 use \Dish\Dish;
 
 Config::setMany(json_decode($_ENV['DISH_PARAMS']));
-Config::load(Config::get('paths.config') . '/config.json');
+Config::load(Config::get('paths.config'));
 
 if(Dish::isAssetRequest())
 {

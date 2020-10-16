@@ -6,7 +6,7 @@ use \Dish\Drive\Folder;
 use \Dish\Build;
 
 Config::setMany($params);
-Config::load(Config::get('paths.config') . '/config.json');
+Config::load(Config::get('paths.config'));
 
 Build::makeDestination(Config::get('paths.dest'));
 

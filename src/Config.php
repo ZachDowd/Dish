@@ -1,5 +1,7 @@
 <?php namespace Dish;
 
+use \Dish\Drive\Folder;
+
 class Config {
 
 	/**
@@ -13,19 +15,30 @@ class Config {
 	/**
 	 * load
 	 *
-	 * Load the JSON file from src/
+	 * Load the JSON files
 	 *
-	 * @param	$value string
+	 * @param	$path string
 	 * @return	void
 	 */
 
-	public static function load($file)
+	public static function load($path)
 	{
-		$data = json_decode(file_get_contents($file));
+		$folder = new Folder($path);
+		$files = $folder->files();
 
-		foreach($data as $key => $value)
+		foreach($files as $file)
 		{
-			self::$data[$key] = $value;
+			$data = json_decode($file->contents());
+
+			if(!isset(self::$data[$file->label()]))
+			{
+				self::$data[$file->label()] = [];
+			}
+	
+			foreach($data as $key => $value)
+			{
+				self::$data[$file->label()][$key] = $value;
+			}
 		}
 	}
 

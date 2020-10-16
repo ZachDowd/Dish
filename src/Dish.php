@@ -12,7 +12,7 @@ class Dish {
 
 	public static function isAssetRequest()
 	{
-		$types = Config::get('assets');
+		$types = Config::get('assets.types');
 
 		if(preg_match('/\.(?:' . implode('|', $types) . ')(\?.*)?$/', $_SERVER["REQUEST_URI"]))
 		{

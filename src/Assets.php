@@ -22,7 +22,7 @@ class Assets {
 		}
 		else
 		{
-			$files = Config::get('css');
+			$files = Config::get('assets.css');
 			foreach($files as $file)
 			{
 				$html[] = '<link rel="stylesheet" type="text/css" href="' . $file . '" />';
@@ -52,7 +52,7 @@ class Assets {
 		}
 		else
 		{
-			$files = Config::get('js');
+			$files = Config::get('assets.js');
 
 			foreach($files as $file)
 			{
