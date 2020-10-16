@@ -134,7 +134,6 @@ class View {
 	public function parse($str)
 	{
 		preg_match_all("/\<([A-Z][^ \n\/\>]+)([^\>]*?)(\/\>|\/?\>((.*?)\<\/\\1\>))/s", $str, $matches);
-		var_dump($matches);
 
 		foreach($matches[0] as $i => $value)
 		{
