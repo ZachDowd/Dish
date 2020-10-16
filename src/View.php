@@ -27,14 +27,6 @@ class View {
 	protected $innerHTML;
 
 	/**
-	 * Namespace
-	 *
-	 * @var string
-	 */
-
-	protected $namespace;
-
-	/**
 	 * Tag name
 	 *
 	 * @var string
@@ -142,11 +134,12 @@ class View {
 	public function parse($str)
 	{
 		preg_match_all("/\<([A-Z][^ \n\/\>]+)([^\>]*?)(\/\>|\/?\>((.*?)\<\/\\1\>))/s", $str, $matches);
+		var_dump($matches);
 
 		foreach($matches[0] as $i => $value)
 		{
 			$view = new View;
-			$view->setTag($matches[1][$i]);
+			$view->setTag(trim($matches[1][$i]));
 			$view->parseAttributes($matches[2][$i]);
 			$view->parseInnerHTML($matches[5][$i]);
 
@@ -203,7 +196,7 @@ class View {
 
 		unset($globals);
 
-		@include(Config::get('paths.components') . '/' . $this->namespace . '/' . $this->tag . '.html');
+		@include(Config::get('paths.components') . '/' . implode('/', $this->tag) . '.html');
 
 		// Collect file
 		$fetched = ob_get_clean();
@@ -227,15 +220,13 @@ class View {
 	{
 		$values = explode(':', $value);
 
-		if(count($values) == 2)
+		if(count($values) > 1)
 		{
-			$this->namespace = $values[0];
-			$this->tag = $values[1];
+			$this->tag = $values;
 		}
 		else
 		{
-			$this->namespace = $values[0];
-			$this->tag = $values[0];
+			$this->tag = [$value, $value];
 		}
 	}
 }
