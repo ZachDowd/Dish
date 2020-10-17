@@ -171,7 +171,7 @@ class Build {
 		$assetsPath = str_replace('//', '/', $assetsPath);
 
 		$minifier = new Minify\CSS();
-		$files = Config::get('css');
+		$files = Config::get('assets.css');
 
 		foreach($files as $file)
 		{
@@ -181,7 +181,7 @@ class Build {
 		$minifier->minify($assetsPath . '/' . Config::get('timestamp') . '.css');
 
 		$minifier = new Minify\JS();
-		$files = Config::get('js');
+		$files = Config::get('assets.js');
 
 		foreach($files as $file)
 		{
