@@ -141,7 +141,12 @@ class Dish {
 
 	public static function serveDocs()
 	{
-		self::serve('app/Docs/docs.html');
+		$components = new Drive\Folder(Config::get('paths.components'));
+
+		$docs = new Docs();
+		$GLOBALS['docs'] = $docs->evaluate($components);
+
+		self::serve(Config::get('paths.src') . '/docs/index.html');
 	}
 
 }
