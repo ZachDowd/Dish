@@ -188,6 +188,7 @@ class View {
 
 		foreach($this->data as $key => $value)
 		{
+			if($key == 'html') continue;
 			$this->data['props'] .= ' ' . $key . '="' . $value . '"';
 		}
 
