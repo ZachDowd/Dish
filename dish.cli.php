@@ -14,6 +14,7 @@ $params = CLI::parameters($_SERVER['argv'], [
 	'minify'		=> false,
 	'timestamp'		=> date('Y-m-d_His'),
 	'parse'			=> true,
+	'env'			=> 'dev'
 ]);
 
 // Build out the path to be used for loading content
